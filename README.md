@@ -166,7 +166,7 @@ $ anvil --fork-url mainnet
 
 ### 3. Deploy
 
-Anvil에 컨트렉트를 배포합니다:
+새로운 터미널 창을 추가로 열고, Anvil에 컨트렉트를 배포합니다:
 
 ```sh
 $ forge script script/Deploy.s.sol --broadcast --fork-url localhost
