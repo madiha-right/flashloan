@@ -44,7 +44,7 @@ foundryup
 
 설치 확인
 ```
-$ foundry --version 
+$ forge --version 
 ```
 
 ### 프로젝트 클론 및 의존성 설치
