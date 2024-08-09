@@ -167,7 +167,7 @@ a. [Alchemy](https://www.alchemy.com/)로 이동해서 회원가입을 마친 �
 
 b. `foundry.toml` 파일을 열고 `[rpc_endpoints]` 섹션으로 이동합니다.
 
-c. `mainnet` URL에 적혀 있는 `{API_KEY_ALCHEMY}` 값을 "a"에서 발급한 API key로 대체합니다.
+c. `mainnet` URL에 적혀 있는 `{IDWMMIb4whIZrlMz0nDvjbwJNQ2CLc4L}` 값을 "a"에서 발급한 API key로 대체합니다.
 
 ### 1. Compile
 
