@@ -28,9 +28,17 @@ bun --version
 
 ### Foundry 설치 및 확인
 
+**macOS**
 설치
 ```
 $ curl -L https://foundry.paradigm.xyz | bash
+```
+
+**Windows**
+```
+$ curl -L https://foundry.paradigm.xyz | bash
+source /c/Users/username/.bashrc
+foundryup
 ```
 
 설치 확인
