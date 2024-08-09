@@ -32,6 +32,7 @@ bun --version
 설치
 ```
 $ curl -L https://foundry.paradigm.xyz | bash
+foundryup
 ```
 
 **Windows**
