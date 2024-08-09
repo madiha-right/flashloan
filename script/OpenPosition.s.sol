@@ -3,7 +3,6 @@ pragma solidity 0.8.24;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import { IPoolAddressesProvider } from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
 
 import { MyContract } from "../src/MyContract.sol";
 import { USDC, DAI, A_USDC, DEBT_DAI } from "../src/Constants.sol";
@@ -17,7 +16,7 @@ contract OpenPosition is BaseScript {
 
     function run() public broadcast {
         uint256 amount = 1000 * 1e6; // 레버리지 이전 홀딩하고 있는 USDC의 수량
-        address myContract = 0x9bE634797af98cB560DB23260b5f7C6e98AcCAcf;
+        address myContract = 0x33f4f8bf90d8AA3d19fF812B50e79c15Df0d0b03;
 
         // MyContract.sol이 EOA로부터 베이스 담보로 사용할 USDC를 가져갈 수 있게 허용합니다.
         IERC20(USDC).forceApprove(myContract, amount);
@@ -28,6 +27,6 @@ contract OpenPosition is BaseScript {
         MyContract(myContract).openPosition(amount);
 
         console.log("DAI - Debt amount: ", IERC20(DEBT_DAI).balanceOf(myContract));
-        console.log("USDC - Collateral amount: ", IERC20(A_USDC).balanceOf(broadcaster));
+        console.log("USDC - Collateral amount: ", IERC20(A_USDC).balanceOf(myContract));
     }
 }

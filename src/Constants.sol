@@ -8,7 +8,7 @@ uint16 constant REFERRAL_CODE = 0;
 uint256 constant INTEREST_RATE_MODE = 2;
 
 // maximum percentage factor (100.00%)
-uint256 constant PERCENTAGE_FACTOR = 1e4;
+uint256 constant PERCENTAGE_FACTOR = 1e4; // 10000 bp
 // max LTV of USDC. 7000 bp, 70%
 uint256 constant USDC_MAX_LTV = 7000;
 

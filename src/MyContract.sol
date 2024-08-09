@@ -2,9 +2,9 @@
 pragma solidity 0.8.24;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { IERC20Metadata } from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import { SafeERC20 } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { IPoolAddressesProvider } from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
-import { IPool } from "@aave/core-v3/contracts/interfaces/IPool.sol";
 import { FlashLoanSimpleReceiverBase } from "@aave/core-v3/contracts/flashloan/base/FlashLoanSimpleReceiverBase.sol";
 
 import { PERCENTAGE_FACTOR, USDC_MAX_LTV, USDC, DAI, REFERRAL_CODE, INTEREST_RATE_MODE } from "./Constants.sol";
@@ -26,8 +26,6 @@ contract MyContract is FlashLoanSimpleReceiverBase {
 
         IERC20(USDC).safeTransferFrom(msg.sender, address(this), amount);
 
-        IERC20(USDC).forceApprove(address(POOL), type(uint256).max);
-
         POOL.flashLoanSimple(address(this), USDC, flashLoanAmount, params, REFERRAL_CODE);
     }
 
@@ -44,18 +42,22 @@ contract MyContract is FlashLoanSimpleReceiverBase {
     {
         (uint256 supplyAmount) = abi.decode(params, (uint256));
 
-        IERC20(USDC).forceApprove(address(POOL), supplyAmount);
+        IERC20(USDC).forceApprove(address(POOL), type(uint256).max);
 
         console.log("premium", premium);
 
         POOL.supply(USDC, supplyAmount, address(this), REFERRAL_CODE);
+
+        // decimal을 핸들링 해줍니다
+        // 아래 코드 실행하기 전 amount = 2333333332
+        // 2333333332 * 1e18 / 1e6 = 2333-333332000000000000
+        amount = amount * (10 ** IERC20Metadata(DAI).decimals()) / (10 ** IERC20Metadata(USDC).decimals());
+
         POOL.borrow(DAI, amount, INTEREST_RATE_MODE, REFERRAL_CODE, address(this));
 
         uint256 amountToRepayFlashLoan = amount + premium;
 
         // NOTE: skip Swap DAI to USDC to make it simple
-
-        IERC20(USDC).forceApprove(address(POOL), amountToRepayFlashLoan);
 
         return true;
     }
